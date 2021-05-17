@@ -7,12 +7,17 @@ import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+import { Text } from 'react-native';
+import { View } from '../components/Themed';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/TabOneScreen';
+// import { Pesanaan } from '../screens/Pesanaan';
+import { TabOneScreen } from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import { HomeScreen } from './HomeScreen';
+import { TopTabNavigator, stackNav } from './TopTabNavigator';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -21,20 +26,34 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      initialRouteName="Home"
+      tabBarOptions={{ activeTintColor: 'black' }}>
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneNavigator}
+        name="Home"
+        component={HomeScreen}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="home-outline" color={color} />,
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
+        name="Keranjang"
         component={TabTwoNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="cart-outline" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Pesanan"
+        component={stackNav}
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="book-outline" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Akun"
+        component={TabTwoNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="person-outline" color={color} />,
         }}
       />
     </BottomTab.Navigator>
@@ -57,7 +76,9 @@ function TabOneNavigator() {
       <TabOneStack.Screen
         name="TabOneScreen"
         component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
+        options={{
+          header: props => null
+        }}
       />
     </TabOneStack.Navigator>
   );
